@@ -1,1 +1,284 @@
+import React from "react";
+import { View, Text, StyleSheet, SafeAreaView, ScrollView, TouchableOpacity } from "react-native";
+import { Ionicons, MaterialCommunityIcons, FontAwesome5 } from "@expo/vector-icons";
 
+export default function SmartGymScreen() {
+  return (
+    <SafeAreaView style={styles.container}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        {/* Top Bar */}
+        <View style={styles.topBar}>
+          <TouchableOpacity>
+            <Ionicons name="menu" size={30} color="#fff" />
+          </TouchableOpacity>
+
+          <View style={styles.topRight}>
+            <View style={styles.notificationDot} />
+            <TouchableOpacity>
+              <Ionicons name="search" size={30} color="#fff" />
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        {/* Greeting */}
+        <Text style={styles.greeting}>Welcome to Smart-Gym</Text>
+        <Text style={styles.subGreeting}>Live occupancy overview</Text>
+
+        {/* Main Occupancy Card */}
+        <View style={styles.mainCard}>
+          <Text style={styles.cardTitle}>Current Gym Occupancy</Text>
+          <Text style={styles.occupancyNumber}>68%</Text>
+          <Text style={styles.occupancyStatus}>Moderately Busy</Text>
+
+          <View style={styles.progressTrack}>
+            <View style={[styles.progressFill, { width: "68%" }]} />
+          </View>
+
+          <Text style={styles.smallText}>102 people currently checked in</Text>
+        </View>
+
+        {/* Sections */}
+        <Text style={styles.sectionTitle}>Browse areas</Text>
+
+        <View style={styles.iconRow}>
+          <AreaIcon
+            icon={<MaterialCommunityIcons name="basketball" size={30} color="#fff" />}
+            label="Basketball Courts"
+          />
+          <AreaIcon
+            icon={<FontAwesome5 name="dumbbell" size={26} color="#fff" />}
+            label="Gym Equipment"
+          />
+          <AreaIcon
+            icon={<MaterialCommunityIcons name="run" size={30} color="#fff" />}
+            label="Cardio Zone"
+          />
+          <AreaIcon
+            icon={<MaterialCommunityIcons name="yoga" size={30} color="#fff" />}
+            label="Stretch Area"
+          />
+        </View>
+
+        {/* Occupancy Details */}
+        <Text style={styles.sectionTitle}>Area details</Text>
+
+        <View style={styles.detailCard}>
+          <View style={styles.detailHeader}>
+            <MaterialCommunityIcons name="basketball" size={28} color="#60a5fa" />
+            <View style={{ flex: 1, marginLeft: 12 }}>
+              <Text style={styles.detailTitle}>Basketball Courts</Text>
+              <Text style={styles.detailSubtitle}>2 of 3 courts occupied</Text>
+            </View>
+            <Text style={styles.detailPercent}>67%</Text>
+          </View>
+
+          <View style={styles.progressTrack}>
+            <View style={[styles.progressFill, { width: "67%", backgroundColor: "#3b82f6" }]} />
+          </View>
+
+          <Text style={styles.smallText}>Peak time usually starts at 6:00 PM</Text>
+        </View>
+
+        <View style={styles.detailCard}>
+          <View style={styles.detailHeader}>
+            <FontAwesome5 name="dumbbell" size={22} color="#f59e0b" />
+            <View style={{ flex: 1, marginLeft: 12 }}>
+              <Text style={styles.detailTitle}>Gym Equipment</Text>
+              <Text style={styles.detailSubtitle}>34 of 50 stations in use</Text>
+            </View>
+            <Text style={styles.detailPercent}>68%</Text>
+          </View>
+
+          <View style={styles.progressTrack}>
+            <View style={[styles.progressFill, { width: "68%", backgroundColor: "#f59e0b" }]} />
+          </View>
+
+          <Text style={styles.smallText}>Free squat racks: 2 • Free benches: 4</Text>
+        </View>
+
+        {/* Footer spacing */}
+        <View style={{ height: 30 }} />
+      </ScrollView>
+
+      {/* Bottom Navigation */}
+      <View style={styles.bottomNav}>
+        <NavItem icon="home" label="Home" active />
+        <NavItem icon="barbell" label="Equipment" />
+        <NavItem icon="basketball" label="Courts" />
+      </View>
+    </SafeAreaView>
+  );
+}
+
+function AreaIcon({ icon, label }) {
+  return (
+    <TouchableOpacity style={styles.areaItem}>
+      <View style={styles.areaCircle}>{icon}</View>
+      <Text style={styles.areaLabel}>{label}</Text>
+    </TouchableOpacity>
+  );
+}
+
+function NavItem({ icon, label, active }) {
+  return (
+    <TouchableOpacity style={styles.navItem}>
+      <Ionicons name={icon} size={28} color={active ? "#fff" : "#8d99a6"} />
+      <Text style={[styles.navLabel, active && { color: "#fff" }]}>{label}</Text>
+    </TouchableOpacity>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#06141d",
+  },
+  topBar: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 20,
+    paddingTop: 10,
+  },
+  topRight: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 18,
+  },
+  notificationDot: {
+    width: 14,
+    height: 14,
+    borderRadius: 7,
+    backgroundColor: "#ff4d6d",
+  },
+  greeting: {
+    color: "#fff",
+    fontSize: 28,
+    fontWeight: "800",
+    marginTop: 28,
+    marginHorizontal: 20,
+  },
+  subGreeting: {
+    color: "#9fb0bf",
+    fontSize: 16,
+    marginTop: 6,
+    marginHorizontal: 20,
+  },
+  mainCard: {
+    backgroundColor: "#14222d",
+    marginHorizontal: 20,
+    marginTop: 24,
+    borderRadius: 20,
+    padding: 22,
+  },
+  cardTitle: {
+    color: "#dce6ee",
+    fontSize: 18,
+    fontWeight: "700",
+  },
+  occupancyNumber: {
+    color: "#4da3ff",
+    fontSize: 42,
+    fontWeight: "800",
+    marginTop: 14,
+  },
+  occupancyStatus: {
+    color: "#ff5f87",
+    fontSize: 18,
+    fontWeight: "700",
+    marginTop: 4,
+  },
+  progressTrack: {
+    height: 12,
+    backgroundColor: "#223544",
+    borderRadius: 999,
+    marginTop: 18,
+    overflow: "hidden",
+  },
+  progressFill: {
+    height: "100%",
+    backgroundColor: "#4da3ff",
+    borderRadius: 999,
+  },
+  smallText: {
+    color: "#9fb0bf",
+    fontSize: 14,
+    marginTop: 12,
+  },
+  sectionTitle: {
+    color: "#fff",
+    fontSize: 22,
+    fontWeight: "800",
+    marginTop: 28,
+    marginBottom: 18,
+    marginHorizontal: 20,
+  },
+  iconRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginHorizontal: 14,
+  },
+  areaItem: {
+    alignItems: "center",
+    width: 90,
+  },
+  areaCircle: {
+    width: 72,
+    height: 72,
+    borderRadius: 36,
+    backgroundColor: "#0f2a3f",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 10,
+  },
+  areaLabel: {
+    color: "#e6eef5",
+    textAlign: "center",
+    fontSize: 13,
+    lineHeight: 18,
+  },
+  detailCard: {
+    backgroundColor: "#14222d",
+    marginHorizontal: 20,
+    marginBottom: 16,
+    borderRadius: 18,
+    padding: 18,
+  },
+  detailHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  detailTitle: {
+    color: "#fff",
+    fontSize: 18,
+    fontWeight: "800",
+  },
+  detailSubtitle: {
+    color: "#9fb0bf",
+    fontSize: 14,
+    marginTop: 4,
+  },
+  detailPercent: {
+    color: "#fff",
+    fontSize: 20,
+    fontWeight: "800",
+  },
+  bottomNav: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    backgroundColor: "#071019",
+    paddingTop: 12,
+    paddingBottom: 18,
+    borderTopWidth: 1,
+    borderTopColor: "#11202c",
+  },
+  navItem: {
+    alignItems: "center",
+  },
+  navLabel: {
+    color: "#8d99a6",
+    fontSize: 13,
+    marginTop: 6,
+  },
+});
